@@ -170,7 +170,7 @@ Bitboard flip_vertical(Bitboard bb)
     bb = (bb >> 32) | ((bb & 0x0000'0000'ffff'ffff) << 32);
     return bb;
 }
-#ifdef RELEASE
+#ifdef DEBUG
 Bitboard flip_horizontal(Bitboard bb)
 {
     // https://www.chessprogramming.org/Flipping_Mirroring_and_Rotating#MirrorHorizontally

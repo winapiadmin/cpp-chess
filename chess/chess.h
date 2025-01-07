@@ -207,11 +207,11 @@ int msb(Bitboard);
 
 std::vector<Square> scan_reversed(Bitboard);
 
-#define popcount __builtin_popcount
+#define popcount __builtin_popcountll
 
 Bitboard flip_vertical(Bitboard);
 
-#ifdef RELEASE
+#ifdef DEBUG
 Bitboard flip_horizontal(Bitboard);
 
 Bitboard flip_diagonal(Bitboard);
