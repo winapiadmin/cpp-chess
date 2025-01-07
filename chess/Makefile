@@ -33,4 +33,3 @@ strip: $(EXEC)
 # Clean up
 clean:
 	rm -f $(OBJS) $(EXEC)
-	rm -rf profdir
