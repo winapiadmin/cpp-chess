@@ -6,3 +6,4 @@ STRICTLY REMOVED:
 - `Board::status()`
 - `Termination`
 - `Board::unicode()`
+- `SquareSet`
