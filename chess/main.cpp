@@ -1,30 +1,31 @@
-#include "chess.cpp"
+#include "../chess.h"
+#include <chrono>
+#include <iomanip>
 #include <iostream>
-
-int main() {
-    chess::Board board;
-
-    while (!board.is_game_over(true)) {
-        while (true) {
-            std::cout << board.unicode(false, true) << std::endl;
-
-            std::string san;
-            std::cout << board.ply() + 1 << ". " << (board.turn ? "[WHITE] " : "[BLACK] ") << "Enter Move: ";
-            std::cin >> san;
-            std::cout << std::endl;
-
-            try {
-                chess::Move move = board.parse_san(san);
-                if (!move) {
-                    throw std::invalid_argument("");
-                }
-                board.push(move);
-                break;
-            } catch (std::invalid_argument) {
-                std::cout << "Invalid Move, Try Again..." << std::endl;
-            }
-        }
+using namespace chess;
+using namespace std;
+int perf(Board& board, int depth){
+    int nodes=0;
+    for (Move i:board.generate_legal_moves()){
+        board.push(i);
+        if (depth-1==0)nodes++;
+        else nodes+=perf(board,depth-1);
+        board.pop();
     }
+    return nodes;
+}
+int main(){
+    Board board;
 
-    std::cout << "Game Over! Result: " << board.result(true);
+    // Start time measurement
+    auto start = std::chrono::steady_clock::now();
+
+    int nodes=perf(board,5);
+
+    // End time measurement
+    auto end = std::chrono::steady_clock::now();
+
+    // Calculate elapsed time
+    std::chrono::duration<double> duration = end - start;
+    std::cout << setprecision(10)<<nodes/duration.count() <<"/"<<duration.count()<<" seconds" <<std::endl;
 }
